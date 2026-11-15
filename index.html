@@ -158,7 +158,7 @@
 const CUSTOM_ASSETS = {
   nessie: '',        // 優先度高：ネッシー（盤面ゴール等・正方形透過PNG推奨）
   boat: '',          // 優先度高：探検隊のボート（盤面の駒・正方形透過PNG推奨）
-  titleArt: '',      // 優先度高：タイトル画面のイラスト（2:1横長PNG推奨）
+  titleArt: 'title.PNG', // 優先度高：タイトル画面のイラスト（2:1横長PNG推奨）
   roleWitness: '',   // 優先度中：目撃者アイコン
   roleReporter: '',  // 優先度中：一般記者アイコン
   roleInsider: ''    // 優先度中：インサイダーアイコン
@@ -422,7 +422,7 @@ const REACTION_STAMPS = [
   { id: 'no_idea',  icon: '😵', text: 'ぜんぜんわからん',   color: 'bg-slate-800 border-slate-400 text-slate-200' },
   { id: 'lead',     icon: '🕵️', text: '誘導してない？',     color: 'bg-fuchsia-950 border-fuchsia-400 text-fuchsia-100' },
   { id: 'trust',    icon: '🙏', text: '信じてくれ！',       color: 'bg-rose-900 border-rose-400 text-rose-100' },
-  { id: 'bad',      icon: '😠', text: 'よくないよぉ⤴︎',     color: 'bg-red-900 border-red-400 text-red-100' },
+  { id: 'bad',      icon: '😒', text: 'よくないよぉ⤴︎',     color: 'bg-red-900 border-red-400 text-red-100' },
   { id: 'ehh',      icon: '😳', text: 'ええ〜⁉️',           color: 'bg-orange-900 border-orange-400 text-orange-100' },
   { id: 'reporter', icon: '📸', text: 'また一般記者かあ〜', color: 'bg-cyan-900 border-cyan-400 text-cyan-100' },
   { id: 'beginner', icon: '🔰', text: '初心者なので……',   color: 'bg-lime-900 border-lime-400 text-lime-100' },
@@ -570,6 +570,7 @@ let reactionRef = null;
 let lastSeenReactionId = null;
 let reactionStartTime = Date.now();
 let lastStampCooldown = 0;
+let isSubmittingInference = false;
 
 let prevPhase = null;
 let prevBoatPos = null;
@@ -612,13 +613,16 @@ function render() {
   prevPhase = phase;
   prevBoatPos = isNaN(curBoatPos) ? null : curBoatPos;
 
-  // 推理入力中のフォーカス維持
+  // 推理入力中のフォーカス維持（自分がまだ未送信の時だけ維持し、送信したら待機画面へ切り替え）
   if (phase === 'INFERENCE_INPUT') {
     const inputEl = document.getElementById('inputInferenceText');
-    if (inputEl) {
+    const hasSubmitted = !!roomData.state?.inferences?.[myPlayerId];
+    if (inputEl && !hasSubmitted) {
       updateInferenceWaitingStatus();
       return;
     }
+  } else {
+    isSubmittingInference = false;
   }
 
   let mainContentHtml = '';
@@ -1265,6 +1269,7 @@ function handleFinishQuestionTurn() {
 
   if (isEnd) {
     localTyping.inference = '';
+    isSubmittingInference = false;
     roomRef.child('state').update({
       phase: 'INFERENCE_INPUT',
       inferences: {},
@@ -1326,8 +1331,8 @@ function renderInferenceInputScreen() {
               placeholder="あなたの推理（例: バナナ、タイヤ）" 
               class="w-full bg-[#050a18] border-2 border-slate-500 px-3 py-3 text-sm text-center text-amber-300 focus:border-emerald-400 outline-none">
             
-            <button onclick="handleSubmitInference()" class="pixel-btn w-full bg-sky-700 text-white py-3.5 text-sm">
-              ▶ 推理を確定して送信
+            <button id="btnSubmitInference" onclick="handleSubmitInference()" ${isSubmittingInference ? 'disabled' : ''} class="pixel-btn w-full bg-sky-700 text-white py-3.5 text-sm">
+              ${isSubmittingInference ? '⏳ 送信中...' : '▶ 推理を確定して送信'}
             </button>
           </div>
         ` : `
@@ -2078,8 +2083,17 @@ function drawThreeCards(deck) {
 }
 
 function handleSubmitInference() {
+  if (isSubmittingInference || roomData.state?.inferences?.[myPlayerId]) return;
   const text = localTyping.inference.trim();
   if (!text) return showToast('推理を入力してください');
+
+  isSubmittingInference = true;
+  const btn = document.getElementById('btnSubmitInference');
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = '⏳ 送信中...';
+  }
+  playSound('blip');
 
   roomRef.child('state/inferences/' + myPlayerId).set({
     name: myName,
@@ -2094,6 +2108,13 @@ function handleSubmitInference() {
         roomRef.child('state').update({ phase: 'INFERENCE_JUDGE' });
       }
     });
+  }).catch(e => {
+    isSubmittingInference = false;
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '▶ 推理を確定して送信';
+    }
+    showToast('送信エラー: ' + e.message);
   });
 }
 
