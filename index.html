@@ -158,7 +158,7 @@
 const CUSTOM_ASSETS = {
   nessie: '',        // 優先度高：ネッシー（盤面ゴール等・正方形透過PNG推奨）
   boat: '',          // 優先度高：探検隊のボート（盤面の駒・正方形透過PNG推奨）
-  titleArt: 'title.PNG',      // 優先度高：タイトル画面のイラスト（横長または正方形PNG）
+  titleArt: '',      // 優先度高：タイトル画面のイラスト（2:1横長PNG推奨）
   roleWitness: '',   // 優先度中：目撃者アイコン
   roleReporter: '',  // 優先度中：一般記者アイコン
   roleInsider: ''    // 優先度中：インサイダーアイコン
@@ -409,22 +409,25 @@ function playSound(name) {
 
 /**
  * =============================================================
- * リアクションスタンプ定義（12種・PCでも1画面表示）
+ * リアクションスタンプ定義（15種・3列×5行でPCでも1画面表示）
  * =============================================================
  */
 const REACTION_STAMPS = [
-  { id: 'good_q',    icon: '👍', text: 'いい質問ですねー。', color: 'bg-emerald-900 border-emerald-400 text-emerald-100' },
-  { id: 'got_it',    icon: '‼️', text: '分かった‼️',         color: 'bg-amber-800 border-amber-300 text-amber-100' },
-  { id: 'hmm',       icon: '🤔', text: '🤔❓',               color: 'bg-sky-900 border-sky-400 text-sky-100' },
-  { id: 'sus',       icon: '👀', text: '怪しいな',           color: 'bg-purple-900 border-purple-400 text-purple-100' },
-  { id: 'naruhodo',  icon: '💡', text: 'なるほど…！',       color: 'bg-teal-900 border-teal-400 text-teal-100' },
-  { id: 'what',      icon: '🌀', text: 'どういうこと！？',   color: 'bg-indigo-900 border-indigo-400 text-indigo-100' },
-  { id: 'no_idea',   icon: '😵', text: 'ぜんぜんわからん',   color: 'bg-slate-800 border-slate-400 text-slate-200' },
-  { id: 'nice_ast',  icon: '✨', text: 'それっぽい！',       color: 'bg-cyan-900 border-cyan-400 text-cyan-100' },
-  { id: 'lead',      icon: '🕵️', text: '誘導してない？',     color: 'bg-fuchsia-950 border-fuchsia-400 text-fuchsia-100' },
-  { id: 'trust',     icon: '🙏', text: '信じてくれ！',       color: 'bg-rose-900 border-rose-400 text-rose-100' },
-  { id: 'closer',    icon: '⛵', text: 'おぉっ！近い！',     color: 'bg-blue-900 border-blue-400 text-blue-100' },
-  { id: 'scoop_cam', icon: '📸', text: 'パシャッ！',         color: 'bg-yellow-900 border-yellow-400 text-yellow-100' }
+  { id: 'good_q',   icon: '👍', text: 'いい質問ですねー。', color: 'bg-emerald-900 border-emerald-400 text-emerald-100' },
+  { id: 'got_it',   icon: '‼️', text: '分かった‼️',         color: 'bg-amber-800 border-amber-300 text-amber-100' },
+  { id: 'hmm',      icon: '🤔', text: '🤔❓',               color: 'bg-sky-900 border-sky-400 text-sky-100' },
+  { id: 'sus',      icon: '👀', text: '怪しいな',           color: 'bg-purple-900 border-purple-400 text-purple-100' },
+  { id: 'naruhodo', icon: '💡', text: 'なるほど…！',       color: 'bg-teal-900 border-teal-400 text-teal-100' },
+  { id: 'what',     icon: '🌀', text: 'どういうこと！？',   color: 'bg-indigo-900 border-indigo-400 text-indigo-100' },
+  { id: 'no_idea',  icon: '😵', text: 'ぜんぜんわからん',   color: 'bg-slate-800 border-slate-400 text-slate-200' },
+  { id: 'lead',     icon: '🕵️', text: '誘導してない？',     color: 'bg-fuchsia-950 border-fuchsia-400 text-fuchsia-100' },
+  { id: 'trust',    icon: '🙏', text: '信じてくれ！',       color: 'bg-rose-900 border-rose-400 text-rose-100' },
+  { id: 'bad',      icon: '😠', text: 'よくないよぉ⤴︎',     color: 'bg-red-900 border-red-400 text-red-100' },
+  { id: 'ehh',      icon: '😳', text: 'ええ〜⁉️',           color: 'bg-orange-900 border-orange-400 text-orange-100' },
+  { id: 'reporter', icon: '📸', text: 'また一般記者かあ〜', color: 'bg-cyan-900 border-cyan-400 text-cyan-100' },
+  { id: 'beginner', icon: '🔰', text: '初心者なので……',   color: 'bg-lime-900 border-lime-400 text-lime-100' },
+  { id: 'retire',   icon: '😐', text: '引退です',           color: 'bg-zinc-800 border-zinc-400 text-zinc-100' },
+  { id: 'yatchi',   icon: '😫', text: 'やっちまったなぁ',   color: 'bg-pink-900 border-pink-400 text-pink-100' }
 ];
 
 /**
@@ -736,7 +739,7 @@ function renderLakeTrackComponent() {
 }
 
 /**
- * 常設リアクションスタンプパネル（スクロールなしで全12個表示）
+ * 常設リアクションスタンプパネル（スクロールなしで全15個表示・3列×5行）
  */
 function renderStampPanelComponent() {
   return `
@@ -750,9 +753,9 @@ function renderStampPanelComponent() {
       <div class="grid grid-cols-3 gap-1.5">
         ${REACTION_STAMPS.map(st => `
           <button onclick="sendReactionStamp('${st.id}')"
-            class="pixel-btn ${st.color} px-1.5 py-2 text-[11px] sm:text-xs leading-tight flex flex-col items-center justify-center gap-0.5 text-center min-h-[44px]">
+            class="pixel-btn ${st.color} px-1 py-1.5 text-[11px] leading-tight flex flex-col items-center justify-center gap-0.5 text-center min-h-[42px]">
             <span class="text-sm leading-none">${st.icon}</span>
-            <span class="truncate w-full">${escapeHtml(st.text)}</span>
+            <span class="w-full break-words">${escapeHtml(st.text)}</span>
           </button>
         `).join('')}
       </div>
@@ -1821,7 +1824,7 @@ function renderSetCompleteScreen() {
 function sendReactionStamp(stampId) {
   if (!currentRoomId) return;
   const now = Date.now();
-  if (now - lastStampCooldown < 600) return; // 連打抑制
+  if (now - lastStampCooldown < 600) return;
   lastStampCooldown = now;
 
   const stamp = REACTION_STAMPS.find(s => s.id === stampId);
@@ -1852,7 +1855,7 @@ function attachReactionListener(roomCode) {
     const data = snap.val();
     if (!data || !data.id) return;
     if (data.id === lastSeenReactionId) return;
-    if (data.ts && data.ts < reactionStartTime - 2000) return; // 入室前の古いスタンプは無視
+    if (data.ts && data.ts < reactionStartTime - 2000) return;
 
     lastSeenReactionId = data.id;
     showReactionPopup(data);
@@ -1864,7 +1867,6 @@ function showReactionPopup(data) {
   const layer = document.getElementById('reactionLayer');
   if (!layer) return;
 
-  // 同時に表示しすぎないよう最大4件までに制限
   while (layer.children.length >= 4) {
     layer.removeChild(layer.firstChild);
   }
