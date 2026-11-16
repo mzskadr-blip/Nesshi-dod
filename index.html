@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -386,30 +387,41 @@ function playSound(name) {
       playTone(392, 0.12, 'square', 0, 0.06);
       playTone(349, 0.16, 'square', 0.12, 0.06);
       break;
+    case 'timeup':
+      playTone(880, 0.12, 'square', 0, 0.07);
+      playTone(440, 0.12, 'square', 0.14, 0.07);
+      playTone(880, 0.12, 'square', 0.28, 0.07);
+      playTone(440, 0.22, 'square', 0.42, 0.07);
+      break;
   }
 }
 
 /**
  * =============================================================
- * リアクションスタンプ定義（15種・3列×5行でPCでも1画面表示）
+ * リアクションスタンプ定義（15種・テーマ別配列 3列×5行）
  * =============================================================
  */
 const REACTION_STAMPS = [
-  { id: 'good_q',   icon: '👍', text: 'いい質問ですねー。', color: 'bg-emerald-900 border-emerald-400 text-emerald-100' },
-  { id: 'got_it',   icon: '‼️', text: '分かった‼️',         color: 'bg-amber-800 border-amber-300 text-amber-100' },
-  { id: 'hmm',      icon: '🤔', text: '🤔❓',               color: 'bg-sky-900 border-sky-400 text-sky-100' },
-  { id: 'sus',      icon: '👀', text: '怪しいな',           color: 'bg-purple-900 border-purple-400 text-purple-100' },
-  { id: 'naruhodo', icon: '💡', text: 'なるほど…！',       color: 'bg-teal-900 border-teal-400 text-teal-100' },
-  { id: 'what',     icon: '🌀', text: 'どういうこと！？',   color: 'bg-indigo-900 border-indigo-400 text-indigo-100' },
-  { id: 'no_idea',  icon: '😵', text: 'ぜんぜんわからん',   color: 'bg-slate-800 border-slate-400 text-slate-200' },
-  { id: 'lead',     icon: '🕵️', text: '誘導してない？',     color: 'bg-fuchsia-950 border-fuchsia-400 text-fuchsia-100' },
-  { id: 'trust',    icon: '🙏', text: '信じてくれ！',       color: 'bg-rose-900 border-rose-400 text-rose-100' },
-  { id: 'bad',      icon: '😒', text: 'よくないよぉ⤴︎',     color: 'bg-red-900 border-red-400 text-red-100' },
-  { id: 'ehh',      icon: '😳', text: 'ええ〜⁉️',           color: 'bg-orange-900 border-orange-400 text-orange-100' },
-  { id: 'reporter', icon: '📸', text: 'また一般記者かあ〜', color: 'bg-cyan-900 border-cyan-400 text-cyan-100' },
-  { id: 'beginner', icon: '🔰', text: '初心者なので……',   color: 'bg-lime-900 border-lime-400 text-lime-100' },
-  { id: 'retire',   icon: '😐', text: '引退です',           color: 'bg-zinc-800 border-zinc-400 text-zinc-100' },
-  { id: 'yatchi',   icon: '😫', text: 'やっちまったなぁ',   color: 'bg-pink-900 border-pink-400 text-pink-100' }
+  // 1行目：質問・会話への基本反応
+  { id: 'good_q',   icon: '👍', text: 'いい質問ですねー。',     color: 'bg-emerald-900 border-emerald-400 text-emerald-100' },
+  { id: 'naruhodo', icon: '💡', text: 'なるほど…！',           color: 'bg-teal-900 border-teal-400 text-teal-100' },
+  { id: 'ehh',      icon: '😳', text: 'ええ〜⁉️',               color: 'bg-orange-900 border-orange-400 text-orange-100' },
+  // 2行目：ひらめき・混乱
+  { id: 'got_it',   icon: '‼️', text: '分かった‼️',             color: 'bg-amber-800 border-amber-300 text-amber-100' },
+  { id: 'what',     icon: '🌀', text: 'どういうこと！？',       color: 'bg-indigo-900 border-indigo-400 text-indigo-100' },
+  { id: 'no_idea',  icon: '😵', text: 'ぜんぜんわからん',       color: 'bg-slate-800 border-slate-400 text-slate-200' },
+  // 3行目：疑惑・心理戦
+  { id: 'sus',      icon: '👀', text: '怪しいな',               color: 'bg-purple-900 border-purple-400 text-purple-100' },
+  { id: 'lead',     icon: '🕵️', text: '誘導してない？',         color: 'bg-fuchsia-950 border-fuchsia-400 text-fuchsia-100' },
+  { id: 'trust',    icon: '🙏', text: '信じてくれ！',           color: 'bg-rose-900 border-rose-400 text-rose-100' },
+  // 4行目：ツッコミ・いじり系
+  { id: 'bad',      icon: '😒', text: 'よくないよぉ⤴︎',         color: 'bg-red-900 border-red-400 text-red-100' },
+  { id: 'life',     icon: '😏', text: 'そんな生き方でいいの？', color: 'bg-sky-900 border-sky-400 text-sky-100' },
+  { id: 'pity',     icon: '🥲', text: 'かわいそう',             color: 'bg-blue-950 border-blue-400 text-blue-100' },
+  // 5行目：お決まりネタ・自虐系
+  { id: 'reporter', icon: '📸', text: 'また一般記者かあ〜',     color: 'bg-cyan-900 border-cyan-400 text-cyan-100' },
+  { id: 'beginner', icon: '🔰', text: '初心者なので……',       color: 'bg-lime-900 border-lime-400 text-lime-100' },
+  { id: 'retire',   icon: '😐', text: '引退です',               color: 'bg-zinc-800 border-zinc-400 text-zinc-100' }
 ];
 
 /**
@@ -562,6 +574,10 @@ let lastStampCooldown = 0;
 let isSubmittingInference = false;
 let isAutoReconnecting = false;
 
+let insiderTimerInterval = null;
+let insiderTimeoutAlarmed = false;
+let lastTickSec = null;
+
 let prevPhase = null;
 let prevBoatPos = null;
 
@@ -594,6 +610,7 @@ db.ref('.info/connected').on('value', snap => {
 
 function render() {
   if (isAutoReconnecting) {
+    stopInsiderTimer();
     appEl.innerHTML = `
       <div class="max-w-md mx-auto w-full rpg-window p-6 text-center space-y-3">
         <div class="w-12 h-12 mx-auto pixel-float">${renderPixelAsset('nessie', '🦕')}</div>
@@ -604,6 +621,7 @@ function render() {
   }
 
   if (!currentRoomId || !roomData) {
+    stopInsiderTimer();
     renderTitleScreen();
     return;
   }
@@ -627,6 +645,11 @@ function render() {
   }
   prevPhase = phase;
   prevBoatPos = isNaN(curBoatPos) ? null : curBoatPos;
+
+  // インサイダー投票以外のフェーズならタイマー停止＆リセット
+  if (phase !== 'INSIDER_VOTE') {
+    stopInsiderTimer();
+  }
 
   // 推理入力中のフォーカス維持（自分がまだ未送信の時だけ維持し、送信したら待機画面へ切り替え）
   if (phase === 'INFERENCE_INPUT') {
@@ -692,6 +715,10 @@ function render() {
       </div>
     `;
   }
+
+  if (phase === 'INSIDER_VOTE') {
+    startInsiderTimer();
+  }
 }
 
 function updateHeader() {
@@ -703,6 +730,61 @@ function updateHeader() {
     <span class="text-slate-200 hidden sm:inline">${escapeHtml(myName)}</span>
     ${isHost ? '<span class="bg-amber-900 text-amber-300 text-[10px] px-1.5 py-0.5 border border-amber-400">HOST</span>' : ''}
   `;
+}
+
+/**
+ * インサイダー投票 1分タイマー管理 (C案: 時間切れアラーム後もしばらく投票可)
+ */
+function startInsiderTimer() {
+  updateInsiderTimerDisplay();
+  if (insiderTimerInterval) return;
+  insiderTimerInterval = setInterval(updateInsiderTimerDisplay, 250);
+}
+
+function stopInsiderTimer() {
+  if (insiderTimerInterval) {
+    clearInterval(insiderTimerInterval);
+    insiderTimerInterval = null;
+  }
+  insiderTimeoutAlarmed = false;
+  lastTickSec = null;
+}
+
+function updateInsiderTimerDisplay() {
+  const box = document.getElementById('insiderTimerBox');
+  const txt = document.getElementById('insiderTimerText');
+  if (!box || !txt || !roomData) return;
+
+  const deadline = Number(roomData.state?.voteDeadline) || 0;
+  if (!deadline) {
+    txt.textContent = '60秒';
+    return;
+  }
+
+  const remainSec = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+
+  if (remainSec > 10) {
+    box.className = 'rpg-subbox py-2 px-4 inline-flex items-center gap-2 border-purple-400';
+    txt.className = 'text-lg text-amber-300';
+    txt.textContent = `残り ${remainSec} 秒`;
+    lastTickSec = remainSec;
+  } else if (remainSec > 0) {
+    box.className = 'rpg-subbox py-2 px-4 inline-flex items-center gap-2 border-rose-400 bg-rose-950/40';
+    txt.className = 'text-lg text-rose-300 animate-pulse';
+    txt.textContent = `残り ${remainSec} 秒！`;
+    if (lastTickSec !== remainSec) {
+      lastTickSec = remainSec;
+      playTone(880, 0.04, 'square', 0, 0.03);
+    }
+  } else {
+    box.className = 'rpg-subbox py-2 px-4 inline-flex items-center gap-2 border-rose-500 bg-rose-950/80 animate-pulse';
+    txt.className = 'text-sm sm:text-base text-rose-200';
+    txt.textContent = '⏰ 時間切れ！急いで投票を！';
+    if (!insiderTimeoutAlarmed) {
+      insiderTimeoutAlarmed = true;
+      playSound('timeup');
+    }
+  }
 }
 
 /**
@@ -768,7 +850,7 @@ function renderLakeTrackComponent() {
 }
 
 /**
- * 常設リアクションスタンプパネル（スクロールなしで全15個表示・3列×5行）
+ * 常設リアクションスタンプパネル（スクロールなしで全15個表示・3列×5行・2行折り返し対応）
  */
 function renderStampPanelComponent() {
   return `
@@ -782,7 +864,7 @@ function renderStampPanelComponent() {
       <div class="grid grid-cols-3 gap-1.5">
         ${REACTION_STAMPS.map(st => `
           <button onclick="sendReactionStamp('${st.id}')"
-            class="pixel-btn ${st.color} px-1 py-1.5 text-[11px] leading-tight flex flex-col items-center justify-center gap-0.5 text-center min-h-[42px]">
+            class="pixel-btn ${st.color} px-1 py-1.5 text-[11px] leading-tight flex flex-col items-center justify-center gap-0.5 text-center min-h-[48px]">
             <span class="text-sm leading-none">${st.icon}</span>
             <span class="w-full break-words">${escapeHtml(st.text)}</span>
           </button>
@@ -1630,7 +1712,7 @@ function renderScoopResultGuesserScreen() {
 }
 
 /**
- * 10. インサイダー投票
+ * 10. インサイダー投票（1分カウントダウン付き・C案）
  */
 function renderInsiderVoteScreen() {
   const myVote = roomData.state.votes?.[myPlayerId];
@@ -1639,11 +1721,15 @@ function renderInsiderVoteScreen() {
   const candidates = Object.keys(roomData.players).filter(pid => pid !== roomData.state.witnessId);
 
   return `
-    <div class="rpg-window-purple p-5 space-y-5 text-center">
-      <div class="space-y-1">
+    <div class="rpg-window-purple p-5 space-y-4 text-center">
+      <div class="space-y-2">
         <div class="w-12 h-12 mx-auto">${renderPixelAsset('roleInsider', '🕵️')}</div>
         <h2 class="text-xl text-purple-300">インサイダーを暴け！</h2>
-        <p class="text-xs text-slate-200">裏切り者は誰だ？ 秘密投票を行ってください。</p>
+        <div id="insiderTimerBox" class="rpg-subbox py-2 px-4 inline-flex items-center gap-2 border-purple-400">
+          <span class="text-xs text-slate-300">⏱️</span>
+          <span id="insiderTimerText" class="text-lg text-amber-300">60秒</span>
+        </div>
+        <p class="text-xs text-slate-200">裏切り者は誰だ？ 話し合って秘密投票を行ってください。</p>
         <p class="text-[11px] text-amber-300">※正しくインサイダーを指名した人全員にボーナス+1点！</p>
       </div>
 
@@ -2339,6 +2425,7 @@ function confirmBoatMoveAndProceed() {
         secretRevealed: false,
         phase: 'INSIDER_VOTE',
         votes: {},
+        voteDeadline: Date.now() + 60000,
         history: currentHistory
       });
     } else {
@@ -2392,7 +2479,8 @@ function handleProceedAfterGuesserVote(isGuesserIdentified) {
     roomRef.child('state').update({
       secretRevealed: isGuesserIdentified,
       phase: 'INSIDER_VOTE',
-      votes: {}
+      votes: {},
+      voteDeadline: Date.now() + 60000
     });
   } else {
     applyRoundResults(isGuesserIdentified, correctPids);
@@ -2538,6 +2626,7 @@ function handleNextRoundOrEnd() {
 
 function handleLeaveRoom() {
   if (confirm('ルームを退出しますか？')) {
+    stopInsiderTimer();
     if (roomRef && myPlayerId) roomRef.child('players/' + myPlayerId).remove();
     if (roomRef) roomRef.off();
     if (reactionRef) reactionRef.off();
@@ -2577,3 +2666,4 @@ tryAutoReconnect();
 </script>
 </body>
 </html>
+```
