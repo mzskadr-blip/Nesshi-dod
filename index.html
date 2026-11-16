@@ -150,18 +150,14 @@
  * =============================================================
  * ★ ドット絵画像の差し替え設定（あとから画像を入れる場合はここ！）
  * =============================================================
- * 同じフォルダに画像(PNG等)を置くか、画像のURLを指定すると、
- * 仮のドット絵SVGの代わりにあなたの画像が表示されます。
- * 空文字 '' のままの箇所は、コード内蔵のドット絵が表示されます。
- * 例: nessie: './nessie.png'
  */
 const CUSTOM_ASSETS = {
-  nessie: '',        // 優先度高：ネッシー（盤面ゴール等・正方形透過PNG推奨）
-  boat: '',          // 優先度高：探検隊のボート（盤面の駒・正方形透過PNG推奨）
+  nessie: '',            // 優先度高：ネッシー（盤面ゴール等・正方形透過PNG推奨）
+  boat: '',              // 優先度高：探検隊のボート（盤面の駒・正方形透過PNG推奨）
   titleArt: 'title.PNG', // 優先度高：タイトル画面のイラスト（2:1横長PNG推奨）
-  roleWitness: '',   // 優先度中：目撃者アイコン
-  roleReporter: '',  // 優先度中：一般記者アイコン
-  roleInsider: ''    // 優先度中：インサイダーアイコン
+  roleWitness: '',       // 優先度中：目撃者アイコン
+  roleReporter: '',      // 優先度中：一般記者アイコン
+  roleInsider: ''        // 優先度中：インサイダーアイコン
 };
 
 /**
@@ -170,7 +166,6 @@ const CUSTOM_ASSETS = {
  * =============================================================
  */
 const PIXEL_SVGS = {
-  // ネッシー（16x16・左向き）
   nessie: `
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges" class="w-full h-full">
       <rect x="4" y="2" width="4" height="3" fill="#22c55e"/>
@@ -189,7 +184,6 @@ const PIXEL_SVGS = {
       <rect x="13" y="13" width="2" height="1" fill="#bae6fd"/>
     </svg>
   `,
-  // ボートの駒（16x16・右向き）
   boat: `
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges" class="w-full h-full">
       <rect x="6" y="3" width="4" height="1" fill="#d97706"/>
@@ -205,10 +199,8 @@ const PIXEL_SVGS = {
       <rect x="12" y="13" width="2" height="1" fill="#bae6fd"/>
     </svg>
   `,
-  // タイトルシーンイラスト（64x32・夜のネス湖）
   titleArt: `
     <svg viewBox="0 0 64 32" shape-rendering="crispEdges" class="w-full h-full bg-[#060d20]">
-      <!-- 星空と月 -->
       <rect x="6" y="4" width="1" height="1" fill="#fef08a"/>
       <rect x="18" y="7" width="1" height="1" fill="#e2e8f0"/>
       <rect x="31" y="3" width="1" height="1" fill="#fef08a"/>
@@ -217,23 +209,19 @@ const PIXEL_SVGS = {
       <rect x="50" y="3" width="6" height="6" fill="#fde047"/>
       <rect x="49" y="4" width="1" height="4" fill="#fde047"/>
       <rect x="53" y="2" width="4" height="5" fill="#060d20"/>
-      <!-- 遠景の山 -->
       <rect x="0" y="15" width="64" height="5" fill="#0f172a"/>
       <rect x="4" y="12" width="14" height="3" fill="#0f172a"/>
       <rect x="8" y="10" width="6" height="2" fill="#0f172a"/>
       <rect x="26" y="11" width="18" height="4" fill="#131e38"/>
       <rect x="31" y="9" width="8" height="2" fill="#131e38"/>
       <rect x="50" y="13" width="14" height="2" fill="#0f172a"/>
-      <!-- 霧 -->
       <rect x="0" y="18" width="64" height="2" fill="#1e293b"/>
       <rect x="6" y="17" width="20" height="1" fill="#334155"/>
       <rect x="36" y="17" width="22" height="1" fill="#334155"/>
-      <!-- 湖 -->
       <rect x="0" y="20" width="64" height="12" fill="#0c2d48"/>
       <rect x="0" y="23" width="64" height="9" fill="#092136"/>
       <rect x="49" y="21" width="8" height="1" fill="#fde047" opacity="0.4"/>
       <rect x="51" y="24" width="4" height="1" fill="#fde047" opacity="0.3"/>
-      <!-- 左側の調査ボートとライト -->
       <polygon points="15,22 34,15 34,26" fill="#fef08a" opacity="0.16"/>
       <rect x="8" y="21" width="3" height="2" fill="#fde68a"/>
       <rect x="7" y="19" width="5" height="1" fill="#d97706"/>
@@ -241,7 +229,6 @@ const PIXEL_SVGS = {
       <rect x="6" y="23" width="9" height="2" fill="#92400e"/>
       <rect x="7" y="25" width="7" height="1" fill="#78350f"/>
       <rect x="13" y="21" width="2" height="2" fill="#fbbf24"/>
-      <!-- 右側のネッシー -->
       <rect x="39" y="10" width="4" height="3" fill="#22c55e"/>
       <rect x="38" y="11" width="2" height="2" fill="#22c55e"/>
       <rect x="39" y="11" width="1" height="1" fill="#ef4444"/>
@@ -250,14 +237,12 @@ const PIXEL_SVGS = {
       <rect x="44" y="18" width="2" height="1" fill="#22c55e"/>
       <rect x="48" y="20" width="3" height="2" fill="#15803d"/>
       <rect x="52" y="19" width="3" height="3" fill="#16a34a"/>
-      <!-- 水面の波しぶき -->
       <rect x="5" y="26" width="11" height="1" fill="#38bdf8"/>
       <rect x="39" y="22" width="18" height="1" fill="#38bdf8"/>
       <rect x="41" y="23" width="4" height="1" fill="#bae6fd"/>
       <rect x="50" y="23" width="3" height="1" fill="#bae6fd"/>
     </svg>
   `,
-  // 役職：目撃者
   roleWitness: `
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges" class="w-full h-full">
       <rect x="3" y="5" width="10" height="6" fill="#fef3c7"/>
@@ -269,7 +254,6 @@ const PIXEL_SVGS = {
       <rect x="6" y="6" width="1" height="1" fill="#ffffff"/>
     </svg>
   `,
-  // 役職：一般記者
   roleReporter: `
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges" class="w-full h-full">
       <rect x="3" y="2" width="9" height="11" fill="#e0f2fe"/>
@@ -282,7 +266,6 @@ const PIXEL_SVGS = {
       <rect x="13" y="11" width="2" height="3" fill="#92400e"/>
     </svg>
   `,
-  // 役職：インサイダー
   roleInsider: `
     <svg viewBox="0 0 16 16" shape-rendering="crispEdges" class="w-full h-full">
       <rect x="4" y="2" width="8" height="2" fill="#7e22ce"/>
@@ -293,7 +276,6 @@ const PIXEL_SVGS = {
       <rect x="9" y="7" width="2" height="1" fill="#f43f5e"/>
     </svg>
   `,
-  // 属性アイコン13種 (12x12)
   attr_色: `<svg viewBox="0 0 12 12" shape-rendering="crispEdges" class="w-full h-full"><rect x="2" y="2" width="8" height="8" fill="#cbd5e1"/><rect x="3" y="3" width="2" height="2" fill="#ef4444"/><rect x="7" y="3" width="2" height="2" fill="#3b82f6"/><rect x="3" y="7" width="2" height="2" fill="#eab308"/><rect x="7" y="7" width="2" height="2" fill="#22c55e"/></svg>`,
   attr_長さ: `<svg viewBox="0 0 12 12" shape-rendering="crispEdges" class="w-full h-full"><rect x="1" y="4" width="10" height="4" fill="#facc15"/><rect x="3" y="4" width="1" height="2" fill="#713f12"/><rect x="6" y="4" width="1" height="2" fill="#713f12"/><rect x="9" y="4" width="1" height="2" fill="#713f12"/></svg>`,
   attr_時: `<svg viewBox="0 0 12 12" shape-rendering="crispEdges" class="w-full h-full"><rect x="2" y="2" width="8" height="8" fill="#e2e8f0"/><rect x="3" y="3" width="6" height="6" fill="#0f172a"/><rect x="5" y="3" width="1" height="4" fill="#fbbf24"/><rect x="6" y="6" width="2" height="1" fill="#fbbf24"/></svg>`,
@@ -554,6 +536,13 @@ function shuffle(arr) {
   return a;
 }
 
+function normalizeFourDigitCode(val) {
+  return String(val || '')
+    .replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+    .replace(/[^0-9]/g, '')
+    .slice(0, 4);
+}
+
 /**
  * -------------------------------------------------------------
  * 状態管理
@@ -571,6 +560,7 @@ let lastSeenReactionId = null;
 let reactionStartTime = Date.now();
 let lastStampCooldown = 0;
 let isSubmittingInference = false;
+let isAutoReconnecting = false;
 
 let prevPhase = null;
 let prevBoatPos = null;
@@ -581,13 +571,38 @@ let localSuggestedTopics = getRandomTopics(3);
 const appEl = document.getElementById('app');
 
 const urlParams = new URLSearchParams(window.location.search);
-let invitedRoomCode = urlParams.get('room') ? urlParams.get('room').toUpperCase() : '';
+let invitedRoomCode = normalizeFourDigitCode(urlParams.get('room') || '');
 
 // ヘッダーアイコン初期化
 document.getElementById('headerNessieIcon').innerHTML = renderPixelAsset('nessie', '🦕');
 updateSoundButton();
 
+// 画面復帰・再接続時のオンライン状態復元
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && currentRoomId && roomRef && myPlayerId) {
+    roomRef.child('players/' + myPlayerId).onDisconnect().update({ online: false });
+    roomRef.child('players/' + myPlayerId).update({ online: true });
+  }
+});
+
+db.ref('.info/connected').on('value', snap => {
+  if (snap.val() === true && currentRoomId && roomRef && myPlayerId) {
+    roomRef.child('players/' + myPlayerId).onDisconnect().update({ online: false });
+    roomRef.child('players/' + myPlayerId).update({ online: true });
+  }
+});
+
 function render() {
+  if (isAutoReconnecting) {
+    appEl.innerHTML = `
+      <div class="max-w-md mx-auto w-full rpg-window p-6 text-center space-y-3">
+        <div class="w-12 h-12 mx-auto pixel-float">${renderPixelAsset('nessie', '🦕')}</div>
+        <p class="text-sm text-emerald-300 animate-pulse">▶ 元の調査ルームへ再接続中...</p>
+      </div>
+    `;
+    return;
+  }
+
   if (!currentRoomId || !roomData) {
     renderTitleScreen();
     return;
@@ -644,6 +659,16 @@ function render() {
     default: mainContentHtml = renderLobbyScreen(); break;
   }
 
+  const isHost = roomData.hostId === myPlayerId;
+  const hostInterruptBar = (isHost && phase !== 'LOBBY' && phase !== 'SET_COMPLETE') ? `
+    <div class="rpg-subbox p-2.5 flex items-center justify-between gap-2 flex-wrap">
+      <span class="text-[11px] text-slate-400">▶ 調査を途中で切り上げてロビーへ戻す場合</span>
+      <button onclick="playSound('blip'); handleForceShowFinalResult()" class="pixel-btn bg-rose-800 hover:bg-rose-700 text-rose-100 px-3 py-1.5 text-xs shrink-0">
+        🏁 最終結果を表示（ロビーに戻る）
+      </button>
+    </div>
+  ` : '';
+
   // PC2カラム構成（右に常設スタンプパネル＋取材ノート）
   if (phase === 'LOBBY') {
     appEl.innerHTML = `
@@ -658,6 +683,7 @@ function render() {
         <div class="lg:col-span-7 space-y-4">
           ${phase !== 'SETUP' ? renderLakeTrackComponent() : ''}
           ${mainContentHtml}
+          ${hostInterruptBar}
         </div>
         <div class="lg:col-span-5 space-y-4">
           ${renderStampPanelComponent()}
@@ -734,7 +760,6 @@ function renderLakeTrackComponent() {
         </span>
       </div>
 
-      <!-- 11マスの湖ボード -->
       <div class="grid grid-cols-11 gap-0.5 bg-[#030a17] p-1 border-2 border-slate-700">
         ${cells.join('')}
       </div>
@@ -786,7 +811,6 @@ function renderInvestigationLogComponent() {
         <span class="text-[10px] text-slate-400">ヒント ${curHintRound}/5</span>
       </div>
 
-      <!-- 1. 出された質問カードの表 -->
       <div>
         <div class="text-[11px] text-amber-300 mb-1 flex items-center justify-between">
           <span>[質問カードの記録]</span>
@@ -830,7 +854,6 @@ function renderInvestigationLogComponent() {
         </div>
       </div>
 
-      <!-- 2. みんなの推理 ＆ 最新距離の表 -->
       <div>
         <div class="text-[11px] text-sky-300 mb-1 flex items-center justify-between">
           <span>[みんなの推理履歴]</span>
@@ -916,7 +939,7 @@ function renderTitleScreen() {
         </div>
 
         <div class="pt-2 border-t-2 border-slate-700">
-          <button onclick="playSound('blip'); handleCreateRoom()" class="pixel-btn w-full bg-emerald-700 hover:bg-emerald-600 text-white py-3 text-sm flex items-center justify-center gap-2">
+          <button id="btnCreateRoom" onclick="playSound('blip'); handleCreateRoom()" class="pixel-btn w-full bg-emerald-700 hover:bg-emerald-600 text-white py-3 text-sm flex items-center justify-center gap-2">
             <span>★</span> 新しい調査ルームを作成
           </button>
         </div>
@@ -924,8 +947,9 @@ function renderTitleScreen() {
         <div class="text-center text-xs text-slate-500">── または ──</div>
 
         <div class="flex gap-2">
-          <input id="inputRoomCode" type="text" maxlength="6" value="${initialCode}" placeholder="6桁コード"
-            class="flex-1 bg-[#050a18] border-2 border-slate-500 px-3 py-2.5 text-sm tracking-widest text-center uppercase text-amber-300 focus:border-sky-400 outline-none">
+          <input id="inputRoomCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" value="${initialCode}" placeholder="4桁の数字"
+            oninput="this.value = normalizeFourDigitCode(this.value)"
+            class="flex-1 bg-[#050a18] border-2 border-slate-500 px-3 py-2.5 text-base tracking-widest text-center text-amber-300 focus:border-sky-400 outline-none">
           <button onclick="playSound('blip'); handleJoinRoom()" class="pixel-btn bg-sky-700 hover:bg-sky-600 text-white px-6 py-2.5 text-sm">
             参加
           </button>
@@ -947,12 +971,14 @@ function renderLobbyScreen() {
   let playerListHtml = players.map(p => {
     const isMe = p.id === myPlayerId;
     const isH = p.id === roomData.hostId;
+    const isOnline = p.online !== false;
     return `
-      <div class="flex items-center justify-between p-2.5 border-2 ${isMe ? 'bg-emerald-950/70 border-emerald-400' : 'bg-[#070d1c] border-slate-700'}">
+      <div class="flex items-center justify-between p-2.5 border-2 ${isMe ? 'bg-emerald-950/70 border-emerald-400' : 'bg-[#070d1c] border-slate-700'} ${!isOnline ? 'opacity-60' : ''}">
         <div class="flex items-center gap-2">
           <span class="text-sm">${isH ? '👑' : '🧭'}</span>
           <span class="text-sm ${isMe ? 'text-emerald-300' : 'text-slate-200'}">${escapeHtml(p.name)}</span>
           ${isMe ? '<span class="text-[10px] bg-emerald-800 border border-emerald-400 text-emerald-100 px-1">YOU</span>' : ''}
+          ${!isOnline ? '<span class="text-[10px] bg-slate-800 border border-slate-500 text-slate-300 px-1">離席中</span>' : ''}
         </div>
         <div class="text-xs text-slate-300">
           ${isNormal ? `正解: <span class="text-emerald-400 text-sm">${p.correctCount || 0}</span>問` : `得点: <span class="text-amber-300 text-sm">${p.score || 0}</span>点`}
@@ -964,8 +990,8 @@ function renderLobbyScreen() {
   return `
     <div class="rpg-window p-5 space-y-5">
       <div class="text-center border-b-2 border-slate-700 pb-4">
-        <span class="text-xs text-slate-400">合言葉（ルームコード）</span>
-        <div class="text-3xl text-amber-300 tracking-widest mt-1">
+        <span class="text-xs text-slate-400">合言葉（4桁ルーム番号）</span>
+        <div class="text-4xl text-amber-300 tracking-widest mt-1">
           ${currentRoomId}
         </div>
         <div class="flex justify-center gap-2 mt-3">
@@ -973,7 +999,7 @@ function renderLobbyScreen() {
             <span>🔗</span> 招待URLをコピー
           </button>
           <button onclick="playSound('blip'); copyRoomCode()" class="pixel-btn px-3 py-2 bg-slate-700 text-slate-200 text-xs">
-            コードのみ
+            番号のみ
           </button>
         </div>
       </div>
@@ -1036,7 +1062,7 @@ function renderSetupScreen() {
   return `
     <div class="rpg-window p-5 space-y-4">
       <div class="text-center text-xs text-emerald-300 border-b-2 border-slate-700 pb-2">
-        第 ${playedCount + 1} 人目の目撃者調査 (${playedCount + 1} / ${totalPlayers}人)
+        第 ${playedCount} 人目の目撃者調査 (${playedCount} / ${totalPlayers}人)
       </div>
 
       <div class="${roleBoxClass} p-4 flex items-center gap-4">
@@ -1770,7 +1796,9 @@ function renderSetCompleteScreen() {
   const isHost = roomData.hostId === myPlayerId;
   const isNormal = roomData.mode === 'NORMAL';
   const players = Object.values(roomData.players || {});
-  
+  const playedCount = toArray(roomData.state?.playedWitnesses).length;
+  const totalPlayers = players.length;
+
   if (isNormal) {
     players.sort((a, b) => (b.correctCount || 0) - (a.correctCount || 0));
   } else {
@@ -1806,24 +1834,33 @@ function renderSetCompleteScreen() {
     <div class="rpg-window-amber p-6 space-y-6 text-center">
       <div>
         <div class="text-4xl">🏆</div>
-        <h2 class="text-2xl text-amber-300 mt-2">ゲームセット終了！</h2>
-        <p class="text-xs text-slate-300 mt-1">全員が目撃者を担当しました</p>
+        <h2 class="text-2xl text-amber-300 mt-2">最終結果発表！</h2>
+        <p class="text-xs text-slate-300 mt-1">
+          ${playedCount >= totalPlayers ? '全員が目撃者を担当しました' : '調査セットが終了しました'}
+        </p>
       </div>
 
       <div class="space-y-2 text-left">${rankedList}</div>
 
       ${isHost ? `
-        <button onclick="handleStartGameSet()" class="pixel-btn w-full bg-emerald-700 text-white py-3.5 text-sm">
-          ▶ もう1セット遊ぶ
-        </button>
-      ` : ''}
+        <div class="space-y-2.5 pt-2">
+          <button onclick="handleStartGameSet()" class="pixel-btn w-full bg-emerald-700 text-white py-3.5 text-sm">
+            ▶ このモードでもう1セット遊ぶ
+          </button>
+          <button onclick="playSound('blip'); handleReturnToLobby()" class="pixel-btn w-full bg-amber-600 text-slate-950 py-3.5 text-sm">
+            🏠 ロビーに戻る（得点リセット・モード切替）
+          </button>
+        </div>
+      ` : `
+        <div class="text-xs text-slate-300 animate-pulse">▶ 隊長が次の操作を選ぶのを待機中...</div>
+      `}
     </div>
   `;
 }
 
 /**
  * -------------------------------------------------------------
- * リアクションスタンプ送受信（本体画面の再描画を起こさない独立パス）
+ * リアクションスタンプ送受信
  * -------------------------------------------------------------
  */
 function sendReactionStamp(stampId) {
@@ -1897,32 +1934,53 @@ function showReactionPopup(data) {
  * ネットワーク＆ロジック操作
  * -------------------------------------------------------------
  */
-function handleCreateRoom() {
+async function generateUniqueRoomCode() {
+  for (let i = 0; i < 15; i++) {
+    const code = String(Math.floor(1000 + Math.random() * 9000));
+    const snap = await db.ref('rooms/' + code).get();
+    if (!snap.exists()) return code;
+  }
+  return String(Math.floor(1000 + Math.random() * 9000));
+}
+
+async function handleCreateRoom() {
   initAudio();
   const name = document.getElementById('inputPlayerName').value.trim();
   if (!name) return showToast('名前を入力してください');
+
+  const btn = document.getElementById('btnCreateRoom');
+  if (btn) btn.disabled = true;
+
   myName = name;
   localStorage.setItem('nessie_pname', myName);
 
-  const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-  currentRoomId = code;
-  roomRef = db.ref('rooms/' + code);
+  try {
+    const code = await generateUniqueRoomCode();
+    currentRoomId = code;
+    localStorage.setItem('nessie_room', code);
+    roomRef = db.ref('rooms/' + code);
 
-  roomRef.set({
-    code: code,
-    hostId: myPlayerId,
-    mode: 'NORMAL',
-    state: { phase: 'LOBBY' },
-    players: { [myPlayerId]: { id: myPlayerId, name: myName, score: 0, correctCount: 0, online: true } }
-  }).then(() => attachRoomListener()).catch(e => showToast(e.message));
+    await roomRef.set({
+      code: code,
+      hostId: myPlayerId,
+      mode: 'NORMAL',
+      state: { phase: 'LOBBY' },
+      players: { [myPlayerId]: { id: myPlayerId, name: myName, score: 0, correctCount: 0, online: true } }
+    });
+    attachRoomListener();
+  } catch (e) {
+    if (btn) btn.disabled = false;
+    showToast(e.message);
+  }
 }
 
 function handleJoinRoom() {
   initAudio();
   const name = document.getElementById('inputPlayerName').value.trim();
-  const code = document.getElementById('inputRoomCode').value.trim().toUpperCase();
+  const rawCode = document.getElementById('inputRoomCode').value;
+  const code = normalizeFourDigitCode(rawCode);
   if (!name) return showToast('名前を入力してください');
-  if (!code || code.length !== 6) return showToast('6桁のコードを入力してください');
+  if (!/^\d{4}$/.test(code)) return showToast('4桁の数字を入力してください');
 
   myName = name;
   localStorage.setItem('nessie_pname', myName);
@@ -1930,18 +1988,75 @@ function handleJoinRoom() {
   roomRef = db.ref('rooms/' + code);
 
   roomRef.get().then(snap => {
-    if (!snap.exists()) return showToast('ルームが見つかりません');
+    if (!snap.exists()) {
+      currentRoomId = null;
+      return showToast('ルームが見つかりません');
+    }
     const data = snap.val();
-    if (Object.keys(data.players || {}).length >= 8 && !data.players[myPlayerId]) return showToast('満員です');
+    const isExistingMember = !!(data.players && data.players[myPlayerId]);
+    const phase = data.state?.phase || 'LOBBY';
 
-    roomRef.child('players/' + myPlayerId).set({
-      id: myPlayerId,
-      name: myName,
-      score: data.players?.[myPlayerId]?.score || 0,
-      correctCount: data.players?.[myPlayerId]?.correctCount || 0,
-      online: true
-    }).then(() => attachRoomListener());
-  }).catch(e => showToast(e.message));
+    if (!isExistingMember && Object.keys(data.players || {}).length >= 8) {
+      currentRoomId = null;
+      return showToast('満員です');
+    }
+    if (!isExistingMember && phase !== 'LOBBY') {
+      currentRoomId = null;
+      return showToast('現在ゲーム進行中です（ロビーに戻ってから参加してください）');
+    }
+
+    localStorage.setItem('nessie_room', code);
+
+    if (isExistingMember) {
+      return roomRef.child('players/' + myPlayerId).update({
+        name: myName,
+        online: true
+      }).then(() => attachRoomListener());
+    } else {
+      return roomRef.child('players/' + myPlayerId).set({
+        id: myPlayerId,
+        name: myName,
+        score: 0,
+        correctCount: 0,
+        online: true
+      }).then(() => attachRoomListener());
+    }
+  }).catch(e => {
+    currentRoomId = null;
+    showToast(e.message);
+  });
+}
+
+async function tryAutoReconnect() {
+  const savedRoom = normalizeFourDigitCode(localStorage.getItem('nessie_room') || '');
+  if (!savedRoom || !myName) return;
+
+  if (invitedRoomCode && invitedRoomCode !== savedRoom) return;
+
+  isAutoReconnecting = true;
+  render();
+
+  try {
+    const snap = await db.ref('rooms/' + savedRoom).get();
+    if (snap.exists()) {
+      const data = snap.val();
+      if (data.players && data.players[myPlayerId]) {
+        currentRoomId = savedRoom;
+        roomRef = db.ref('rooms/' + savedRoom);
+        await roomRef.child('players/' + myPlayerId).update({
+          name: myName,
+          online: true
+        });
+        isAutoReconnecting = false;
+        attachRoomListener();
+        return;
+      }
+    }
+    localStorage.removeItem('nessie_room');
+  } catch (e) {}
+
+  isAutoReconnecting = false;
+  render();
 }
 
 function attachRoomListener() {
@@ -1954,12 +2069,13 @@ function attachRoomListener() {
     if (!snap.exists()) {
       showToast('ルームが解散されました');
       if (reactionRef) reactionRef.off();
+      localStorage.removeItem('nessie_room');
       currentRoomId = null; roomData = null; render(); return;
     }
     roomData = snap.val();
 
-    if (!roomData.players[roomData.hostId]?.online) {
-      const activeIds = Object.keys(roomData.players).filter(id => roomData.players[id].online);
+    if (!roomData.players?.[roomData.hostId]?.online) {
+      const activeIds = Object.keys(roomData.players || {}).filter(id => roomData.players[id].online);
       if (activeIds.length > 0 && activeIds[0] === myPlayerId) {
         roomRef.update({ hostId: myPlayerId });
       }
@@ -1985,6 +2101,24 @@ function handleStartGameSet() {
   roomRef.update(updates).then(() => {
     startNewWitnessGame([]);
   });
+}
+
+function handleForceShowFinalResult() {
+  if (roomData.hostId !== myPlayerId) return;
+  if (!confirm('現在の調査を終了して、ここまでの得点で最終結果画面を表示しますか？\n（最終結果画面から得点をリセットしてロビーに戻れます）')) return;
+  roomRef.child('state').update({ phase: 'SET_COMPLETE' });
+}
+
+function handleReturnToLobby() {
+  if (roomData.hostId !== myPlayerId) return;
+  const pids = Object.keys(roomData.players || {});
+  const updates = {};
+  pids.forEach(pid => {
+    updates[`players/${pid}/score`] = 0;
+    updates[`players/${pid}/correctCount`] = 0;
+  });
+  updates['state'] = { phase: 'LOBBY' };
+  roomRef.update(updates);
 }
 
 function startNewWitnessGame(playedWitnesses = []) {
@@ -2344,13 +2478,13 @@ function applyNewInsiderScores(hasSecretRevealed, isInsiderCaught) {
     });
   }
 
-  if (hasSecretRevealed) {
-    correctRegularReporters.forEach(pid => {
-      roundScores[pid] += 1;
-      scoreDetails[pid].push('正解ボーナス: +1');
-    });
-  }
+  // 正解ボーナス（正体発表の有無に関わらず、一般記者が正解を出した時点で +1）
+  correctRegularReporters.forEach(pid => {
+    roundScores[pid] += 1;
+    scoreDetails[pid].push('正解ボーナス: +1');
+  });
 
+  // 指名ボーナス
   Object.entries(votes).forEach(([voterPid, targetPid]) => {
     if (voterPid !== actualInsiderId && targetPid === actualInsiderId) {
       roundScores[voterPid] += 1;
@@ -2407,6 +2541,7 @@ function handleLeaveRoom() {
     if (roomRef && myPlayerId) roomRef.child('players/' + myPlayerId).remove();
     if (roomRef) roomRef.off();
     if (reactionRef) reactionRef.off();
+    localStorage.removeItem('nessie_room');
     currentRoomId = null; roomData = null; render();
   }
 }
@@ -2417,7 +2552,7 @@ function copyInviteUrl() {
 }
 
 function copyRoomCode() {
-  navigator.clipboard.writeText(currentRoomId).then(() => showToast('ルームコードをコピーしました！'));
+  navigator.clipboard.writeText(currentRoomId).then(() => showToast('ルーム番号をコピーしました！'));
 }
 
 function showToast(msg) {
@@ -2436,8 +2571,9 @@ function escapeHtml(str) {
   return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
 }
 
-// 起動
+// 起動（保存されたルームがあれば自動復帰を試行）
 render();
+tryAutoReconnect();
 </script>
 </body>
 </html>
